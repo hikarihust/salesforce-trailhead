@@ -6,4 +6,5 @@ Build a Travel Approval App
     Build a Data Model for a Travel Approval App
         Create a Travel Approval Lightning App
         Create a Department Object
-    
+        Create a Travel Approval Object
+        

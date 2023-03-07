@@ -17,4 +17,5 @@ Build a Travel Approval App
         Enable Chatter on the Travel Approval Object
     Add Business Logic to a Travel Approval App
         Create Validation Rules
+        Create a Roll-Up Summary Field
     

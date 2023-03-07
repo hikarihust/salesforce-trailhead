@@ -15,4 +15,6 @@ Build a Travel Approval App
         Customize the Travel Approval Object Page Layout
         Customize the Expense Item Related List
         Enable Chatter on the Travel Approval Object
+    Add Business Logic to a Travel Approval App
+        Create Validation Rules
     

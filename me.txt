@@ -12,4 +12,5 @@ Build a Travel Approval App
     Customize the User Interface for a Travel Approval App
         Create a User and Setup Approvals
         Create and Customize a List View
+        Customize the Travel Approval Object Page Layout
     

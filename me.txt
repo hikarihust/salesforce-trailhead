@@ -22,4 +22,6 @@ Build a Travel Approval App
         Create a Flow
         Create an Approval Process
         Test Approval Process
+    Add Reports and Dashboards to a Travel Approval App
+        Load Data Using the Data Import Wizard
     

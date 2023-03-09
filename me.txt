@@ -25,4 +25,5 @@ Build a Travel Approval App
     Add Reports and Dashboards to a Travel Approval App
         Load Data Using the Data Import Wizard
         Create a Travel Requests by Department Report
+        Create a Travel Requests by Month Report
     

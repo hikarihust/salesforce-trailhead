@@ -1,0 +1,46 @@
+public class ContactTrgUtils {
+    public static void SetApprover(List<Contact> trgNew, boolean isUpdate, boolean isInsert, boolean isDelete, boolean isAfter) {
+        if(!isAfter && isUpdate) {
+            
+            Set<Id> ownerIDs = new Set<Id>();
+            Map<Id, User> ownerMap = new Map<Id, User>();
+    
+            for(Contact cont : trgNew) {
+                if(cont.In_Approval__c) {
+                    ownerIDs.add(cont.OwnerId);
+                }
+            }
+    
+            for(User u : [SELECT Id, Special_Approver__c FROM User WHERE Id IN :ownerIDs]) {
+                ownerMap.put(u.Id, u);
+            }
+    
+            List<User> ownersToUpdate = new List<User>();
+    
+            for(Contact cont : trgNew) {
+                if(cont.In_Approval__c) {
+                    User owner = ownerMap.get(cont.OwnerId);
+                    owner.Special_Approver__c = getApprover(cont).Id;
+                    ownersToUpdate.add(owner);
+                }
+            }
+    
+            if(!ownersToUpdate.isEmpty()) {
+                update ownersToUpdate;
+            }
+        }
+    }
+    
+    private static User getApprover(Contact cont) {
+        User approver = [SELECT Id From User WHERE Username = 'vudinhquangk53+quang.approver@gmail.com'];
+    
+        // business logic for selecting an approver
+        if(cont.MailingState == 'TX') {
+            approver = [SELECT Id From User WHERE Username = 'vudinhquangk53+quang.approver@gmail.com'];
+        } else {
+            approver = [SELECT Id From User WHERE Username = 'vudinhquangk53+quang.approver@gmail.com'];
+        }
+    
+        return approver;
+    }
+}

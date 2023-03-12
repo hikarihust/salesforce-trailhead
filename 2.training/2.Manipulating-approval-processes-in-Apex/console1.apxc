@@ -1,0 +1,7 @@
+String approvalProcessName = [SELECT Name FROM ProcessDefinition WHERE Name = 'ApexApproval' LIMIT 1][0].Name;
+// Create account
+Account acct = new Account(name = 'TestAccount', Industry = 'Not Manufacturing');
+insert acct;
+
+ApprovalProcessRecipes apr = new ApprovalProcessRecipes();
+Approval.ProcessResult processResult = apr.startApprovalProcess(acct.Id, approvalProcessName);

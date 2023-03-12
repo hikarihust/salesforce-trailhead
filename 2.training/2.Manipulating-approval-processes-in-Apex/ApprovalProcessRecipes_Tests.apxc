@@ -1,0 +1,101 @@
+@isTest
+public with sharing class ApprovalProcessRecipes_Tests {
+
+    static String approvalProcessName = [SELECT Name FROM ProcessDefinition WHERE Name = 'My Test Process' LIMIT 1][0].Name;
+
+    @isTest
+    static void testSubmitAccountToApprovalProcessPositive() {
+        // Create account
+		Account acct = new Account(name = 'TestAccount', Industry = 'Not Manufacturing');
+		insert acct;
+
+        ApprovalProcessRecipes apr = new ApprovalProcessRecipes();
+        Approval.ProcessResult processResult = apr.startApprovalProcess(acct.Id, approvalProcessName);
+        System.assert(processResult.isSuccess(), 'expected to recieve true');
+        //Valid values are: Approved, Rejected, Removed or Pending.
+        System.assertEquals('Pending', processResult.getInstanceStatus());
+
+    }
+
+    @isTest
+    static void testSubmitAccountToApprovalProcessPositiveSetUserId() {
+        // Create user
+        User notAdmin = new User(
+            ProfileId = [SELECT Id FROM Profile WHERE Name = 'Standard User'].Id,
+            LastName = 'last',
+            Email = 'puser000@amamama.com',
+            Username = 'puser000@amamama.com' + System.currentTimeMillis(),
+            CompanyName = 'TEST',
+            Title = 'title',
+            Alias = 'alias',
+            TimeZoneSidKey = 'America/Los_Angeles',
+            EmailEncodingKey = 'UTF-8',
+            LanguageLocaleKey = 'en_US',
+            LocaleSidKey = 'en_US'
+        );
+
+        insert(notAdmin);
+
+        ApprovalProcessRecipes apr = new ApprovalProcessRecipes();
+        Approval.ProcessResult result = null;
+        System.runAs(notAdmin) {
+            // Create account
+            Account acct = new Account(name = 'TestAccount', Industry = 'Not Manufacturing');
+            insert acct;
+            // test.startTest();
+            result = apr.startApprovalProcess(acct.Id, approvalProcessName, notAdmin.Id);
+            // test.stopTest();
+        }
+        
+        System.assert(result.isSuccess(), 'expected to true');
+        // check the approval process to see who the approver is 
+        ProcessInstanceStep step = [
+            SELECT FIELDS(standard) 
+            FROM ProcessInstanceStep 
+            WHERE 
+                StepStatus = 'Started' 
+                AND Comments = 'Submitted for approval by apex code' 
+            LIMIT 1
+        ];
+        
+        System.assertNotEquals(step.ActorId, step.OriginalActorId, 'expected to see that the actor is not the non-admin user');
+    }
+
+    @isTest
+    static void testApproveNextRecordStep() {
+        // Create user
+        User notAdmin = new User(
+            ProfileId = [SELECT Id FROM Profile WHERE Name = 'Standard User'].Id,
+            LastName = 'last',
+            Email = 'puser000@amamama.com',
+            Username = 'puser000@amamama.com' + System.currentTimeMillis(),
+            CompanyName = 'TEST',
+            Title = 'title',
+            Alias = 'alias',
+            TimeZoneSidKey = 'America/Los_Angeles',
+            EmailEncodingKey = 'UTF-8',
+            LanguageLocaleKey = 'en_US',
+            LocaleSidKey = 'en_US'
+        );
+
+        insert(notAdmin);
+
+        ApprovalProcessRecipes apr = new ApprovalProcessRecipes();
+        Approval.ProcessResult result = null;
+        Id accId;
+        System.runAs(notAdmin) {
+            // Create account
+            Account acct = new Account(name = 'TestAccount', Industry = 'Not Manufacturing');
+            insert acct;
+            accId = acct.Id;
+        }
+
+        List<ProcessInstanceWorkitem> workItems = [
+            SELECT Id, ProcessInstanceId 
+            FROM ProcessInstanceWorkitem 
+            WHERE ProcessInstance.TargetObjectId = :accId
+        ];
+        result = apr.approveNextRecordStep(workItems);
+        System.assert(result.isSuccess(), 'expected to recieve true');
+    }
+}

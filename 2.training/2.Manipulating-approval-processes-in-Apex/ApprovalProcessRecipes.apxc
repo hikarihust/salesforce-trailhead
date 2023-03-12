@@ -1,0 +1,49 @@
+public with sharing class ApprovalProcessRecipes {
+    public Approval.ProcessResult startApprovalProcess(Id recordId, String approvalProcessName, Id userId) {
+
+        // Create an approval request for the account
+        Approval.ProcessSubmitRequest processSubmitRequest = new Approval.ProcessSubmitRequest();
+        processSubmitRequest.setObjectId(recordId);
+        processSubmitRequest.setComments('Submitted for approval by apex code');
+        // Submit the record to specific process
+        processSubmitRequest.setProcessDefinitionNameOrId(approvalProcessName);
+        // Submit on behalf of a specific submitter
+        processSubmitRequest.setSubmitterId(userId);
+        // skip the criteria evaluation
+        processSubmitRequest.setSkipEntryCriteria(true);
+
+        // Submit the approval request for the account
+        return Approval.process(processSubmitRequest);
+    }
+
+    /**
+     * @description                     
+     * Starts a given approval process for the specified record, assuming the submitting user is the apex 
+     * execution context user
+     * @param recordId the record to approve
+     * @param approvalProcessName the approval process to use
+     */
+
+    public Approval.ProcessResult startApprovalProcess(Id recordId, String approvalProcessName) {
+        Id userId = userInfo.getUserId();
+
+        return startApprovalProcess(recordId, approvalProcessName, userId);
+    }
+
+    public Approval.ProcessResult approveNextRecordStep(List<ProcessInstanceWorkitem> workItems) {
+        // ProcessInstanceWorkitem activeWorkItemId  = workItems[0];
+
+        // Instantiate the new ProcessWorkitemRequest object and populate it
+        Approval.ProcessWorkitemRequest approveStep = new Approval.ProcessWorkitemRequest();
+        approveStep.setComments('Approving this step via APEX code');
+        approveStep.setAction('Approve');
+        approveStep.setNextApproverIds(new Id[] {UserInfo.getUserId()});
+
+
+        // Use the ID from the newly created item to specify the item to be worked
+        approveStep.setWorkitemId(workItems[0].Id);
+        
+        // Submit the request for approval
+        return Approval.process(approveStep);
+    }
+}

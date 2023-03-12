@@ -1,0 +1,7 @@
+List<ProcessInstanceWorkitem> workItems = [
+    SELECT Id, ProcessInstanceId 
+    FROM ProcessInstanceWorkitem 
+    WHERE ProcessInstance.TargetObjectId = '0012w00001OR8HOAA1'
+];
+ApprovalProcessRecipes apr = new ApprovalProcessRecipes();
+Approval.ProcessResult result = apr.approveNextRecordStep(workItems);

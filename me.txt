@@ -54,4 +54,5 @@ Create a New Visualforce Page
 Add a Page Header
 Add Action Buttons
 Add an Icon
+Add a Detail Row
     

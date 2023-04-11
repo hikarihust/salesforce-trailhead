@@ -52,4 +52,5 @@ Create & Use Custom Controllers
 Get Started
 Create a New Visualforce Page
 Add a Page Header
+Add Action Buttons
     

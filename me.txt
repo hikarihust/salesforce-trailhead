@@ -38,4 +38,5 @@ Chaining Approval Processes with Apex Code
                                         Visualforce Basics
 
 Create And Edit Visualforce Pages
+Use Simple Variables and Formulas
     

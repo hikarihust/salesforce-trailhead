@@ -46,3 +46,9 @@ Use Standard List Controllers
 Use Static Resources
 Create & Use Custom Controllers
     
+    ====================================================================================================
+                            Build a Visualforce App with the Lightning Design System
+
+Get Started
+Create a New Visualforce Page
+    

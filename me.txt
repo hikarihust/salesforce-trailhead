@@ -57,4 +57,5 @@ Add an Icon
 Add a Detail Row
 Add a Tile for Each Contact
 Add Another Icon
+Add a Contact Profile Picture
     

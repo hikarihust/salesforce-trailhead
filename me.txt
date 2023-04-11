@@ -43,4 +43,5 @@ Use Standard Controllers
 Display Records, Fields, and Tables
 Input Data Using Forms
 Use Standard List Controllers
+Use Static Resources
     

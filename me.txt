@@ -42,4 +42,5 @@ Use Simple Variables and Formulas
 Use Standard Controllers
 Display Records, Fields, and Tables
 Input Data Using Forms
+Use Standard List Controllers
     

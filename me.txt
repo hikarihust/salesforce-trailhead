@@ -64,4 +64,6 @@ Add a Contact Profile Picture
 
 Flow Builder Basics
     Learn About Flow Variables
+Data and Actions in Flows
+    Work with Salesforce Records in Flows
     

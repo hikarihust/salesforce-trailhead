@@ -68,4 +68,6 @@ Data and Actions in Flows
     Work with Salesforce Records in Flows
     Combine Variables and Data Elements
     Communicate Using the Action Element
+Flow Builder Logic
+    Define Multiple Paths in a Flow
     

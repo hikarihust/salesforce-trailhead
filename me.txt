@@ -72,4 +72,6 @@ Flow Builder Logic
     Define Multiple Paths in a Flow
     Calculate Values in Variables and Formulas
     Run a Flow Within a Flow
+Record-Triggered Flows
+    Build a Record-Triggered Flow
     

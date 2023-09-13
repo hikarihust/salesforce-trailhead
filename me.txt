@@ -75,4 +75,6 @@ Flow Builder Logic
 Record-Triggered Flows
     Build a Record-Triggered Flow
     Add a Scheduled Task to Your Flow
+Autolaunched and Scheduled Flows
+    Build an Autolaunched Flow
     
